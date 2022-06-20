@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>New Order</h2>
+
+<mat-dialog-content>
+  <mat-button-toggle-group [(ngModel)]="order.transactionType">
+    <mat-button-toggle class="buy" [value]="OrderTransactionType.BUY">Buy</mat-button-toggle>
+    <mat-button-toggle class="sell" [value]="OrderTransactionType.SELL">Sell</mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <mat-button-toggle-group [(ngModel)]="order.type">
+    <mat-button-toggle [value]="OrderType.MARKET">Market</mat-button-toggle>
+    <mat-button-toggle [value]="OrderType.LIMIT">Limit</mat-button-toggle>
+    <mat-button-toggle [value]="OrderType.STOP_LIMIT">Stop limit</mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <mat-form-field *ngIf="order.type === OrderType.STOP_LIMIT">
+    <input matInput placeholder="Stop" type="number" [(ngModel)]="order.stop">
+  </mat-form-field>
+
+
+  <mat-form-field *ngIf="order.type === OrderType.LIMIT || order.type === OrderType.STOP_LIMIT">
+    <input matInput placeholder="Limit" type="number" [(ngModel)]="order.limit">
+  </mat-form-field>
+
+
+  <mat-form-field>
+    <input matInput placeholder="Amount" type="number" [(ngModel)]="order.amount">
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button (click)="close()">Close</button>
+  <button mat-raised-button color="primary" (click)="placeOrder()" [disabled]="isDisabled()">Place order</button>
+
+</mat-dialog-actions>

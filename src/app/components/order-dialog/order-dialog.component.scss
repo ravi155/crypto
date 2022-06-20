@@ -1,0 +1,30 @@
+
+mat-dialog-content {
+
+  mat-button-toggle-group {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+
+    mat-button-toggle {
+      flex: 1 1;
+    }
+
+    .mat-button-toggle-checked {
+      &.buy {
+        background-color: #58ff52;
+      }
+
+      &.sell {
+        background-color: #ff5252;
+      }
+    }
+  }
+
+  mat-form-field {
+    display: block;
+  }
+}
+
+

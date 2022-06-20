@@ -1,0 +1,66 @@
+<mat-toolbar color="secondary">
+  <div>
+    <h1>Your Wallet</h1>
+  </div>
+  <div>Cash: {{myCash$ | async}}</div>
+  <div>BTC: {{myBtc$ | async}}</div>
+  <div class="buttons">
+    <button mat-button mat-raised-button (click)="addCash()">Add Cash</button>
+    <button mat-button mat-raised-button color="primary" (click)="newOrder()">New Order</button>
+  </div>
+</mat-toolbar>
+
+<div class="orders" *ngIf="(orders | async).length > 0">
+  <table mat-table [dataSource]="orders">
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef> Order Type </th>
+      <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="transactionType">
+      <th mat-header-cell *matHeaderCellDef> Transaction </th>
+      <td mat-cell *matCellDef="let element"> {{element.transactionType}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Order Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef> Amount </th>
+      <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="limit">
+      <th mat-header-cell *matHeaderCellDef> Limit </th>
+      <td mat-cell *matCellDef="let element"> {{element.limit}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="stop">
+      <th mat-header-cell *matHeaderCellDef> Stop </th>
+      <td mat-cell *matCellDef="let element"> {{element.stop}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="transactionPrice">
+      <th mat-header-cell *matHeaderCellDef> Price </th>
+      <td mat-cell *matCellDef="let element"> {{element.transactionPrice}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="transactionTotal">
+      <th mat-header-cell *matHeaderCellDef> Total </th>
+      <td mat-cell *matCellDef="let element"> {{element.transactionTotal}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let element">
+        <button *ngIf="element.status !== OrderStatus.CLOSED" mat-raised-button (click)="removeOrder(element)">DEL</button>
+        <button *ngIf="element.status === OrderStatus.CLOSED" mat-raised-button (click)="removeOrder(element)">Archive</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
